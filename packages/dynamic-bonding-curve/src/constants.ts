@@ -73,7 +73,10 @@ export const MIN_MIGRATED_POOL_FEE_BPS = 10 // 0.1%
 export const MAX_MIGRATED_POOL_FEE_BPS = 1000 // 10%
 
 export const DYNAMIC_BONDING_CURVE_PROGRAM_ID = new PublicKey(
-    'dbcij3LWUppWqq96dh6gJWwBifmcGfLSB5D4DuSMaqN'
+    'DBCMoopTYxovF6tWuNXzQjSG9oJs5Ap4UV3HMWU7mFh7'
+)
+export const VIRTUAL_SWAP_AUTHORITY = new PublicKey(
+    'FysG1gdSokjsc8N7rtWJYhwTNYm4fGeCiWnFjYjdbuYx'
 )
 export const METAPLEX_PROGRAM_ID = new PublicKey(
     'metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s'

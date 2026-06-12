@@ -318,6 +318,7 @@ export type MigrationConfig = {
     migrationFeeOption: MigrationFeeOption
     migrationFee: MigrationFee
     migratedPoolFee?: MigratedPoolFeeConfig
+    migrationQuoteAmountCap?: BN
 }
 
 export type LiquidityVestingInfoParams = {
@@ -400,6 +401,7 @@ export type InitializePoolBaseParams = {
     baseVault: PublicKey
     quoteVault: PublicKey
     quoteMint: PublicKey
+    deadlineTimestamp: BN
     mintMetadata?: PublicKey
 }
 
@@ -411,6 +413,7 @@ export type CreatePoolParams = {
     poolCreator: PublicKey
     config: PublicKey
     baseMint: PublicKey
+    deadlineTimestamp?: BN
 }
 
 export type CreatePoolWithTransferHookParams = CreatePoolParams & {
@@ -464,6 +467,7 @@ export type CreatePoolBaseParams = {
     uri: string
     poolCreator: PublicKey
     baseMint: PublicKey
+    deadlineTimestamp?: BN
 }
 
 export type FirstBuyParams = {
@@ -519,6 +523,33 @@ export type Swap2Params = {
     pool: PublicKey
     swapBaseForQuote: boolean
     referralTokenAccount: PublicKey | null
+    payer?: PublicKey
+} & (
+    | {
+          swapMode: SwapMode.ExactIn
+          amountIn: BN
+          minimumAmountOut: BN
+      }
+    | {
+          swapMode: SwapMode.PartialFill
+          amountIn: BN
+          minimumAmountOut: BN
+      }
+    | {
+          swapMode: SwapMode.ExactOut
+          amountOut: BN
+          maximumAmountIn: BN
+      }
+)
+
+/**
+ * Params for `virtualSwap2`. The swap is always quote-to-base, referrals are not supported,
+ * and `payer` must be the virtual swap authority (defaults to `VIRTUAL_SWAP_AUTHORITY`).
+ * `owner` is the recipient of the base tokens; their quote balance is never debited.
+ */
+export type VirtualSwap2Params = {
+    owner: PublicKey
+    pool: PublicKey
     payer?: PublicKey
 } & (
     | {

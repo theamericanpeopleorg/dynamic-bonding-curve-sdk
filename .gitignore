@@ -11,6 +11,8 @@ node_modules
 
 # Build
 dist
+!packages/dynamic-bonding-curve/dist/
+!packages/dynamic-bonding-curve/dist/**
 
 # Misc
 .DS_Store

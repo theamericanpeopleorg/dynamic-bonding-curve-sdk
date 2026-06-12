@@ -19,6 +19,7 @@ import {
     getTokenType,
     unwrapSOLInstruction,
     validateConfigParameters,
+    validateDeadlineTimestamp,
     validateSwapAmount,
     validateTransferHookProgram,
     wrapSOLInstruction,
@@ -209,6 +210,7 @@ export class DynamicBondingCurveProgram {
             baseVault,
             quoteVault,
             quoteMint,
+            deadlineTimestamp,
         } = params
 
         return this.program.methods
@@ -216,6 +218,7 @@ export class DynamicBondingCurveProgram {
                 name,
                 symbol,
                 uri,
+                deadlineTimestamp,
             })
             .accountsPartial({
                 pool,
@@ -250,6 +253,7 @@ export class DynamicBondingCurveProgram {
             baseVault,
             quoteVault,
             quoteMint,
+            deadlineTimestamp,
         } = params
 
         return this.program.methods
@@ -257,6 +261,7 @@ export class DynamicBondingCurveProgram {
                 name,
                 symbol,
                 uri,
+                deadlineTimestamp,
             })
             .accountsPartial({
                 pool,
@@ -292,6 +297,7 @@ export class DynamicBondingCurveProgram {
             baseVault,
             quoteVault,
             quoteMint,
+            deadlineTimestamp,
             transferHookProgram,
             tokenQuoteProgram,
         } = params
@@ -301,6 +307,7 @@ export class DynamicBondingCurveProgram {
                 name,
                 symbol,
                 uri,
+                deadlineTimestamp,
             })
             .accountsPartial({
                 pool,
@@ -327,6 +334,9 @@ export class DynamicBondingCurveProgram {
         const { baseMint, name, symbol, uri, poolCreator, config, payer } =
             createPoolParam
 
+        const deadlineTimestamp = createPoolParam.deadlineTimestamp ?? new BN(0)
+        validateDeadlineTimestamp(deadlineTimestamp)
+
         const pool = deriveDbcPoolAddress(quoteMint, baseMint, config)
         const baseVault = deriveDbcTokenVaultAddress(pool, baseMint)
         const quoteVault = deriveDbcTokenVaultAddress(pool, quoteMint)
@@ -343,6 +353,7 @@ export class DynamicBondingCurveProgram {
             baseVault,
             quoteVault,
             quoteMint,
+            deadlineTimestamp,
         }
 
         if (tokenType === TokenType.SPLToken) {
@@ -375,6 +386,9 @@ export class DynamicBondingCurveProgram {
             )
         }
 
+        const deadlineTimestamp = createPoolParam.deadlineTimestamp ?? new BN(0)
+        validateDeadlineTimestamp(deadlineTimestamp)
+
         const pool = deriveDbcPoolAddress(quoteMint, baseMint, config)
         const baseVault = deriveDbcTokenVaultAddress(pool, baseMint)
         const quoteVault = deriveDbcTokenVaultAddress(pool, quoteMint)
@@ -391,6 +405,7 @@ export class DynamicBondingCurveProgram {
             baseVault,
             quoteVault,
             quoteMint,
+            deadlineTimestamp,
             transferHookProgram,
             tokenQuoteProgram,
         })

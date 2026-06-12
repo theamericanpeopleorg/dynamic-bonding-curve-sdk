@@ -110,7 +110,7 @@ jobs:
       - name: Start Solana test validator
         run: |
           solana-test-validator \
-            --bpf-program dbcij3LWUppWqq96dh6gJWwBifmcGfLSB5D4DuSMaqN packages/dynamic-bonding-curve/tests/fixtures/dynamic_bonding_curve.so \
+            --bpf-program DBCMoopTYxovF6tWuNXzQjSG9oJs5Ap4UV3HMWU7mFh7 packages/dynamic-bonding-curve/tests/fixtures/dynamic_bonding_curve.so \
             --bpf-program cpamdpZCGKUy5JxQXB4dcpGPiikHawvSWAd6mEn1sGG packages/dynamic-bonding-curve/tests/fixtures/cp_amm.so \
             --bpf-program Eo7WjKq67rjJQSZxS6z3YkapzY3eMj6Xy8X5EQVn5UaB packages/dynamic-bonding-curve/tests/fixtures/amm.so \
             --bpf-program LocpQgucEQHbqNABEYvBvwoxCPsSbG91A1QaQhQQqjn packages/dynamic-bonding-curve/tests/fixtures/locker.so \

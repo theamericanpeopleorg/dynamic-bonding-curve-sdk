@@ -1,5 +1,5 @@
 {
-  "name": "ts-sdk",
+  "name": "@meteora-ag/dynamic-bonding-curve-sdk",
   "devDependencies": {
     "prettier": "^3.5.3",
     "tsup": "^8.4.0",
@@ -20,7 +20,30 @@
     "check-types": "pnpm -r run check-types",
     "test": "pnpm -r run test"
   },
-  "workspaces": [
-    "packages/*"
+  "version": "1.5.10-mschf",
+  "type": "module",
+  "main": "packages/dynamic-bonding-curve/dist/index.cjs",
+  "module": "packages/dynamic-bonding-curve/dist/index.js",
+  "types": "packages/dynamic-bonding-curve/dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./packages/dynamic-bonding-curve/dist/index.d.ts",
+      "import": "./packages/dynamic-bonding-curve/dist/index.js",
+      "require": "./packages/dynamic-bonding-curve/dist/index.cjs"
+    }
+  },
+  "dependencies": {
+    "@coral-xyz/anchor": "^0.31.0",
+    "@solana/spl-token": "^0.4.13",
+    "@solana/web3.js": "^1.98.0",
+    "bn.js": "^5.2.1",
+    "decimal.js": "^10.5.0"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "files": [
+    "packages/dynamic-bonding-curve/dist",
+    "README.md"
   ]
 }

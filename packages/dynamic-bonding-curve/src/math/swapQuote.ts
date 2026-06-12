@@ -28,6 +28,43 @@ import {
     SwapQuote2Result,
 } from '../types'
 
+/**
+ * Whether the curve has reached the migration quote threshold, counting both real and
+ * virtual quote reserves (mirrors the program's `is_curve_complete`).
+ */
+export function isCurveComplete(
+    virtualPool: VirtualPool,
+    config: PoolConfig
+): boolean {
+    const totalQuoteReserve = virtualPool.poolState.quoteReserve.add(
+        virtualPool.poolState.virtualQuoteReserve ?? new BN(0)
+    )
+    return totalQuoteReserve.gte(config.migrationQuoteThreshold)
+}
+
+/**
+ * Whether the sale is complete: the curve reached the threshold or the pool's deadline
+ * has passed (mirrors the program's `is_sale_complete`). `currentTimestamp` is in unix
+ * seconds regardless of the pool's activation type; when omitted, the deadline check
+ * is skipped.
+ */
+export function isSaleComplete(
+    virtualPool: VirtualPool,
+    config: PoolConfig,
+    currentTimestamp?: BN
+): boolean {
+    if (isCurveComplete(virtualPool, config)) {
+        return true
+    }
+    const deadlineTimestamp =
+        virtualPool.poolState.deadlineTimestamp ?? new BN(0)
+    return (
+        currentTimestamp !== undefined &&
+        !deadlineTimestamp.isZero() &&
+        currentTimestamp.gte(deadlineTimestamp)
+    )
+}
+
 // SwapQuote V1 //
 
 /**
@@ -155,11 +192,10 @@ export function swapQuote(
     slippageBps: number = 0,
     hasReferral: boolean,
     currentPoint: BN,
-    eligibleForFirstSwapWithMinFee: boolean
+    eligibleForFirstSwapWithMinFee: boolean,
+    currentTimestamp?: BN
 ): SwapQuoteResult {
-    if (
-        virtualPool.poolState.quoteReserve.gte(config.migrationQuoteThreshold)
-    ) {
+    if (isSaleComplete(virtualPool, config, currentTimestamp)) {
         throw new Error('Virtual pool is completed')
     }
 
@@ -1028,11 +1064,10 @@ export function swapQuoteExactIn(
     slippageBps: number = 0,
     hasReferral: boolean,
     currentPoint: BN,
-    eligibleForFirstSwapWithMinFee: boolean
+    eligibleForFirstSwapWithMinFee: boolean,
+    currentTimestamp?: BN
 ): SwapQuote2Result {
-    if (
-        virtualPool.poolState.quoteReserve.gte(config.migrationQuoteThreshold)
-    ) {
+    if (isSaleComplete(virtualPool, config, currentTimestamp)) {
         throw new Error('Virtual pool is completed')
     }
 
@@ -1100,11 +1135,10 @@ export function swapQuotePartialFill(
     slippageBps: number = 0,
     hasReferral: boolean,
     currentPoint: BN,
-    eligibleForFirstSwapWithMinFee: boolean
+    eligibleForFirstSwapWithMinFee: boolean,
+    currentTimestamp?: BN
 ): SwapQuote2Result {
-    if (
-        virtualPool.poolState.quoteReserve.gte(config.migrationQuoteThreshold)
-    ) {
+    if (isSaleComplete(virtualPool, config, currentTimestamp)) {
         throw new Error('Virtual pool is completed')
     }
 
@@ -1173,11 +1207,10 @@ export function swapQuoteExactOut(
     slippageBps: number = 0,
     hasReferral: boolean,
     currentPoint: BN,
-    eligibleForFirstSwapWithMinFee: boolean
+    eligibleForFirstSwapWithMinFee: boolean,
+    currentTimestamp?: BN
 ): SwapQuote2Result {
-    if (
-        virtualPool.poolState.quoteReserve.gte(config.migrationQuoteThreshold)
-    ) {
+    if (isSaleComplete(virtualPool, config, currentTimestamp)) {
         throw new Error('Virtual pool is completed')
     }
 

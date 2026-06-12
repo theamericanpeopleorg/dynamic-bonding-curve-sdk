@@ -13,6 +13,7 @@ import {
     SwapQuote2Params,
     SwapQuoteParams,
     Swap2Params,
+    VirtualSwap2Params,
     type SwapParams,
     SwapQuoteResult,
     SwapQuote2Result,
@@ -32,6 +33,7 @@ import {
     getMigrationThresholdPrice,
 } from '../helpers'
 import { NATIVE_MINT } from '@solana/spl-token'
+import { VIRTUAL_SWAP_AUTHORITY } from '../constants'
 import {
     swapQuoteExactIn,
     swapQuoteExactOut,
@@ -41,6 +43,17 @@ import {
 } from '../math'
 import { StateService } from './state'
 import BN from 'bn.js'
+
+/**
+ * This fork rejects all base-to-quote swaps on-chain (SellDisabled); fail fast client-side.
+ */
+function assertSellEnabled(swapBaseForQuote: boolean): void {
+    if (swapBaseForQuote) {
+        throw new Error(
+            'Sells are disabled: base-to-quote swaps are rejected by this program (SellDisabled)'
+        )
+    }
+}
 
 export class PoolService extends DynamicBondingCurveProgram {
     constructor(
@@ -71,6 +84,8 @@ export class PoolService extends DynamicBondingCurveProgram {
             pool,
             referralTokenAccount,
         } = params
+
+        assertSellEnabled(swapBaseForQuote)
 
         const { virtualPool, poolConfigState } =
             await this.getPoolWithConfig(pool)
@@ -204,6 +219,8 @@ export class PoolService extends DynamicBondingCurveProgram {
             payer,
             referralTokenAccount,
         } = params
+
+        assertSellEnabled(swapBaseForQuote)
 
         let amount0: BN
         let amount1: BN
@@ -340,6 +357,120 @@ export class PoolService extends DynamicBondingCurveProgram {
     }
 
     /**
+     * Build a virtual swap transaction (`virtualSwap2`).
+     *
+     * Virtual swaps record off-chain quote contributions: the pool's virtual quote
+     * reserve increases and `owner` receives base tokens from the vault, but no quote
+     * tokens are transferred from the payer. Always quote-to-base, no referral.
+     * `payer` must be the virtual swap authority and defaults to `VIRTUAL_SWAP_AUTHORITY`.
+     */
+    async virtualSwap2(params: VirtualSwap2Params): Promise<Transaction> {
+        const { pool, swapMode, owner } = params
+
+        const payer = params.payer ?? VIRTUAL_SWAP_AUTHORITY
+
+        let amount0: BN
+        let amount1: BN
+
+        if (swapMode === SwapMode.ExactOut) {
+            amount0 = params.amountOut
+            amount1 = params.maximumAmountIn
+        } else {
+            amount0 = params.amountIn
+            amount1 = params.minimumAmountOut
+        }
+
+        // error checks
+        validateSwapAmount(amount0)
+
+        const { virtualPool, poolConfigState } =
+            await this.getPoolWithConfig(pool)
+
+        // check if rate limiter is applied if:
+        // 1. rate limiter mode
+        // 2. swap direction is QuoteToBase
+        // 3. current point is greater than activation point
+        // 4. current point is less than activation point + maxLimiterDuration
+        let rateLimiterApplied = false
+        if (
+            poolConfigState.poolFees.baseFee.baseFeeMode ===
+            BaseFeeMode.RateLimiter
+        ) {
+            const currentPoint = await getCurrentPoint(
+                this.connection,
+                poolConfigState.activationType
+            )
+
+            rateLimiterApplied = isRateLimiterApplied(
+                currentPoint,
+                virtualPool.poolState.activationPoint,
+                TradeDirection.QuoteToBase,
+                poolConfigState.poolFees.baseFee.secondFactor,
+                poolConfigState.poolFees.baseFee.thirdFactor,
+                new BN(poolConfigState.poolFees.baseFee.firstFactor)
+            )
+        }
+
+        const { inputMint, outputMint, inputTokenProgram, outputTokenProgram } =
+            this.prepareSwapParams(
+                false,
+                virtualPool.poolState,
+                poolConfigState
+            )
+
+        // add preInstructions for ATA creation; the input quote account is never
+        // debited, so no SOL wrapping is needed
+        const {
+            ataTokenA: inputTokenAccount,
+            ataTokenB: outputTokenAccount,
+            instructions: preInstructions,
+        } = await this.prepareTokenAccounts(
+            owner,
+            payer,
+            inputMint,
+            outputMint,
+            inputTokenProgram,
+            outputTokenProgram
+        )
+
+        const remainingAccounts: AccountMeta[] = []
+
+        // add remaining accounts if rate limiter is applied
+        if (rateLimiterApplied || poolConfigState.enableFirstSwapWithMinFee) {
+            remainingAccounts.push({
+                pubkey: SYSVAR_INSTRUCTIONS_PUBKEY,
+                isSigner: false,
+                isWritable: false,
+            })
+        }
+
+        return this.program.methods
+            .virtualSwap2({
+                amount0,
+                amount1,
+                swapMode: swapMode,
+            })
+            .accountsPartial({
+                baseMint: virtualPool.poolState.baseMint,
+                quoteMint: poolConfigState.quoteMint,
+                pool,
+                baseVault: virtualPool.poolState.baseVault,
+                quoteVault: virtualPool.poolState.quoteVault,
+                config: virtualPool.poolState.config,
+                poolAuthority: this.poolAuthority,
+                referralTokenAccount: null,
+                inputTokenAccount,
+                outputTokenAccount,
+                payer,
+                tokenBaseProgram: outputTokenProgram,
+                tokenQuoteProgram: inputTokenProgram,
+            })
+            .remainingAccounts(remainingAccounts)
+            .preInstructions(preInstructions)
+            .transaction()
+    }
+
+    /**
      * Build a swap2 transaction for transfer-hook pools.
      */
     async swap2WithTransferHook(params: Swap2Params): Promise<Transaction> {
@@ -351,6 +482,8 @@ export class PoolService extends DynamicBondingCurveProgram {
             payer,
             referralTokenAccount,
         } = params
+
+        assertSellEnabled(swapBaseForQuote)
 
         let amount0: BN
         let amount1: BN
@@ -510,6 +643,8 @@ export class PoolService extends DynamicBondingCurveProgram {
             eligibleForFirstSwapWithMinFee,
         } = params
 
+        assertSellEnabled(swapBaseForQuote)
+
         return swapQuote(
             virtualPool,
             config,
@@ -536,6 +671,8 @@ export class PoolService extends DynamicBondingCurveProgram {
             currentPoint,
             slippageBps,
         } = params
+
+        assertSellEnabled(swapBaseForQuote)
 
         switch (swapMode) {
             case SwapMode.ExactIn:
@@ -640,6 +777,8 @@ export class PoolService extends DynamicBondingCurveProgram {
                 sqrtPrice: new BN(sqrtStartPrice),
                 baseReserve: new BN(0),
                 quoteReserve: new BN(0),
+                virtualQuoteReserve: new BN(0),
+                deadlineTimestamp: new BN(0),
                 activationPoint: new BN(0),
                 volatilityTracker: {
                     lastUpdateTimestamp: new BN(0),
@@ -668,6 +807,8 @@ export class PoolService extends DynamicBondingCurveProgram {
             eligibleForFirstSwapWithMinFee = false,
             currentPoint = new BN(0),
         } = params
+
+        assertSellEnabled(swapBaseForQuote)
 
         const poolConfig = this.normalizeQuoteConfig(config)
         const virtualPool = this.buildSimulatedVirtualPool(
@@ -714,6 +855,8 @@ export class PoolService extends DynamicBondingCurveProgram {
             eligibleForFirstSwapWithMinFee = false,
             currentPoint = new BN(0),
         } = params
+
+        assertSellEnabled(swapBaseForQuote)
 
         const poolConfig = this.normalizeQuoteConfig(config)
         const virtualPool = this.buildSimulatedVirtualPool(

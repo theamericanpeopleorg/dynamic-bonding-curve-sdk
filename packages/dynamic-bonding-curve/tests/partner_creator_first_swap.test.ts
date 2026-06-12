@@ -97,8 +97,8 @@ describe('Partner Creator First Swap Tests', { timeout: 60000 }, () => {
                 migrationOption: MigrationOption.MET_DAMM_V2,
                 migrationFeeOption: MigrationFeeOption.Customizable,
                 migrationFee: {
-                    feePercentage: 10,
-                    creatorFeePercentage: 50,
+                    feePercentage: 0,
+                    creatorFeePercentage: 0,
                 },
                 migratedPoolFee: {
                     collectFeeMode: MigratedCollectFeeMode.QuoteToken,

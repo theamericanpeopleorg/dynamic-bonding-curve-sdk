@@ -5,7 +5,7 @@
  * IDL can be found at `target/idl/dynamic_bonding_curve.json`.
  */
 export type DynamicBondingCurve = {
-    address: 'dbcij3LWUppWqq96dh6gJWwBifmcGfLSB5D4DuSMaqN'
+    address: 'DBCMoopTYxovF6tWuNXzQjSG9oJs5Ap4UV3HMWU7mFh7'
     metadata: {
         name: 'dynamicBondingCurve'
         version: '0.2.0'
@@ -20,7 +20,7 @@ export type DynamicBondingCurve = {
             accounts: [
                 {
                     name: 'poolAuthority'
-                    address: 'FhVo3mqL8PW5pH5U2CN4XE33DokiyZnUwuGpH2hmHLuM'
+                    address: 'GmJQraEgZ7rseK5kyNNKPJF7289NxZhknwsYyc6VUcio'
                 },
                 {
                     name: 'pool'
@@ -91,7 +91,7 @@ export type DynamicBondingCurve = {
             accounts: [
                 {
                     name: 'poolAuthority'
-                    address: 'FhVo3mqL8PW5pH5U2CN4XE33DokiyZnUwuGpH2hmHLuM'
+                    address: 'GmJQraEgZ7rseK5kyNNKPJF7289NxZhknwsYyc6VUcio'
                 },
                 {
                     name: 'pool'
@@ -199,7 +199,7 @@ export type DynamicBondingCurve = {
             accounts: [
                 {
                     name: 'poolAuthority'
-                    address: 'FhVo3mqL8PW5pH5U2CN4XE33DokiyZnUwuGpH2hmHLuM'
+                    address: 'GmJQraEgZ7rseK5kyNNKPJF7289NxZhknwsYyc6VUcio'
                 },
                 {
                     name: 'config'
@@ -314,7 +314,7 @@ export type DynamicBondingCurve = {
                 },
                 {
                     name: 'poolAuthority'
-                    address: 'FhVo3mqL8PW5pH5U2CN4XE33DokiyZnUwuGpH2hmHLuM'
+                    address: 'GmJQraEgZ7rseK5kyNNKPJF7289NxZhknwsYyc6VUcio'
                 },
                 {
                     name: 'signer'
@@ -352,7 +352,7 @@ export type DynamicBondingCurve = {
                 {
                     name: 'treasury'
                     writable: true
-                    address: '6aYhxiNGmG8AyU25rh2R7iFu4pBrqnQHpNUGhmsEXRcm'
+                    address: 'Ff4kZLzK89T3tjMknyNHAyTU1sUzMtnbvbzuuaNvXFcZ'
                 },
                 {
                     name: 'eventAuthority'
@@ -370,7 +370,7 @@ export type DynamicBondingCurve = {
             accounts: [
                 {
                     name: 'poolAuthority'
-                    address: 'FhVo3mqL8PW5pH5U2CN4XE33DokiyZnUwuGpH2hmHLuM'
+                    address: 'GmJQraEgZ7rseK5kyNNKPJF7289NxZhknwsYyc6VUcio'
                 },
                 {
                     name: 'config'
@@ -444,7 +444,7 @@ export type DynamicBondingCurve = {
             accounts: [
                 {
                     name: 'poolAuthority'
-                    address: 'FhVo3mqL8PW5pH5U2CN4XE33DokiyZnUwuGpH2hmHLuM'
+                    address: 'GmJQraEgZ7rseK5kyNNKPJF7289NxZhknwsYyc6VUcio'
                 },
                 {
                     name: 'config'
@@ -677,7 +677,7 @@ export type DynamicBondingCurve = {
                 {
                     name: 'poolAuthority'
                     writable: true
-                    address: 'FhVo3mqL8PW5pH5U2CN4XE33DokiyZnUwuGpH2hmHLuM'
+                    address: 'GmJQraEgZ7rseK5kyNNKPJF7289NxZhknwsYyc6VUcio'
                 },
                 {
                     name: 'baseVault'
@@ -959,7 +959,7 @@ export type DynamicBondingCurve = {
             accounts: [
                 {
                     name: 'poolAuthority'
-                    address: 'FhVo3mqL8PW5pH5U2CN4XE33DokiyZnUwuGpH2hmHLuM'
+                    address: 'GmJQraEgZ7rseK5kyNNKPJF7289NxZhknwsYyc6VUcio'
                 },
                 {
                     name: 'config'
@@ -1010,7 +1010,7 @@ export type DynamicBondingCurve = {
                 },
                 {
                     name: 'poolAuthority'
-                    address: 'FhVo3mqL8PW5pH5U2CN4XE33DokiyZnUwuGpH2hmHLuM'
+                    address: 'GmJQraEgZ7rseK5kyNNKPJF7289NxZhknwsYyc6VUcio'
                 },
                 {
                     name: 'creator'
@@ -1151,7 +1151,7 @@ export type DynamicBondingCurve = {
                 },
                 {
                     name: 'poolAuthority'
-                    address: 'FhVo3mqL8PW5pH5U2CN4XE33DokiyZnUwuGpH2hmHLuM'
+                    address: 'GmJQraEgZ7rseK5kyNNKPJF7289NxZhknwsYyc6VUcio'
                 },
                 {
                     name: 'creator'
@@ -1287,7 +1287,7 @@ export type DynamicBondingCurve = {
                 },
                 {
                     name: 'poolAuthority'
-                    address: 'FhVo3mqL8PW5pH5U2CN4XE33DokiyZnUwuGpH2hmHLuM'
+                    address: 'GmJQraEgZ7rseK5kyNNKPJF7289NxZhknwsYyc6VUcio'
                 },
                 {
                     name: 'creator'
@@ -1430,7 +1430,7 @@ export type DynamicBondingCurve = {
                 {
                     name: 'poolAuthority'
                     writable: true
-                    address: 'FhVo3mqL8PW5pH5U2CN4XE33DokiyZnUwuGpH2hmHLuM'
+                    address: 'GmJQraEgZ7rseK5kyNNKPJF7289NxZhknwsYyc6VUcio'
                 },
                 {
                     name: 'pool'
@@ -1560,7 +1560,7 @@ export type DynamicBondingCurve = {
                 {
                     name: 'poolAuthority'
                     writable: true
-                    address: 'FhVo3mqL8PW5pH5U2CN4XE33DokiyZnUwuGpH2hmHLuM'
+                    address: 'GmJQraEgZ7rseK5kyNNKPJF7289NxZhknwsYyc6VUcio'
                 },
                 {
                     name: 'lpMint'
@@ -1778,7 +1778,7 @@ export type DynamicBondingCurve = {
                 {
                     name: 'poolAuthority'
                     writable: true
-                    address: 'FhVo3mqL8PW5pH5U2CN4XE33DokiyZnUwuGpH2hmHLuM'
+                    address: 'GmJQraEgZ7rseK5kyNNKPJF7289NxZhknwsYyc6VUcio'
                 },
                 {
                     name: 'pool'
@@ -1939,7 +1939,7 @@ export type DynamicBondingCurve = {
                 {
                     name: 'poolAuthority'
                     writable: true
-                    address: 'FhVo3mqL8PW5pH5U2CN4XE33DokiyZnUwuGpH2hmHLuM'
+                    address: 'GmJQraEgZ7rseK5kyNNKPJF7289NxZhknwsYyc6VUcio'
                 },
                 {
                     name: 'pool'
@@ -2112,7 +2112,7 @@ export type DynamicBondingCurve = {
             accounts: [
                 {
                     name: 'poolAuthority'
-                    address: 'FhVo3mqL8PW5pH5U2CN4XE33DokiyZnUwuGpH2hmHLuM'
+                    address: 'GmJQraEgZ7rseK5kyNNKPJF7289NxZhknwsYyc6VUcio'
                 },
                 {
                     name: 'config'
@@ -2159,7 +2159,7 @@ export type DynamicBondingCurve = {
             accounts: [
                 {
                     name: 'poolAuthority'
-                    address: 'FhVo3mqL8PW5pH5U2CN4XE33DokiyZnUwuGpH2hmHLuM'
+                    address: 'GmJQraEgZ7rseK5kyNNKPJF7289NxZhknwsYyc6VUcio'
                 },
                 {
                     name: 'config'
@@ -2240,7 +2240,7 @@ export type DynamicBondingCurve = {
             accounts: [
                 {
                     name: 'poolAuthority'
-                    address: 'FhVo3mqL8PW5pH5U2CN4XE33DokiyZnUwuGpH2hmHLuM'
+                    address: 'GmJQraEgZ7rseK5kyNNKPJF7289NxZhknwsYyc6VUcio'
                 },
                 {
                     name: 'config'
@@ -2321,7 +2321,7 @@ export type DynamicBondingCurve = {
             accounts: [
                 {
                     name: 'poolAuthority'
-                    address: 'FhVo3mqL8PW5pH5U2CN4XE33DokiyZnUwuGpH2hmHLuM'
+                    address: 'GmJQraEgZ7rseK5kyNNKPJF7289NxZhknwsYyc6VUcio'
                 },
                 {
                     name: 'config'
@@ -2436,13 +2436,94 @@ export type DynamicBondingCurve = {
             args: []
         },
         {
+            name: 'virtualSwap2'
+            docs: ['Accepts: VirtualPool only.']
+            discriminator: [227, 189, 120, 105, 163, 220, 191, 84]
+            accounts: [
+                {
+                    name: 'poolAuthority'
+                    address: 'GmJQraEgZ7rseK5kyNNKPJF7289NxZhknwsYyc6VUcio'
+                },
+                {
+                    name: 'config'
+                },
+                {
+                    name: 'pool'
+                    writable: true
+                },
+                {
+                    name: 'inputTokenAccount'
+                    docs: ['The user token account for input token']
+                    writable: true
+                },
+                {
+                    name: 'outputTokenAccount'
+                    docs: ['The user token account for output token']
+                    writable: true
+                },
+                {
+                    name: 'baseVault'
+                    docs: ['The vault token account for base token']
+                    writable: true
+                },
+                {
+                    name: 'quoteVault'
+                    docs: ['The vault token account for quote token']
+                    writable: true
+                },
+                {
+                    name: 'baseMint'
+                    docs: ['The mint of base token']
+                },
+                {
+                    name: 'quoteMint'
+                    docs: ['The mint of quote token']
+                },
+                {
+                    name: 'payer'
+                    docs: ['The user performing the swap']
+                    signer: true
+                },
+                {
+                    name: 'tokenBaseProgram'
+                    docs: ['Token base program']
+                },
+                {
+                    name: 'tokenQuoteProgram'
+                    docs: ['Token quote program']
+                },
+                {
+                    name: 'referralTokenAccount'
+                    docs: ['referral token account']
+                    writable: true
+                    optional: true
+                },
+                {
+                    name: 'eventAuthority'
+                },
+                {
+                    name: 'program'
+                },
+            ]
+            args: [
+                {
+                    name: 'params'
+                    type: {
+                        defined: {
+                            name: 'swapParameters2'
+                        }
+                    }
+                },
+            ]
+        },
+        {
             name: 'withdrawLeftover'
             docs: ['Accepts: VirtualPool or TransferHookPool.']
             discriminator: [20, 198, 202, 237, 235, 243, 183, 66]
             accounts: [
                 {
                     name: 'poolAuthority'
-                    address: 'FhVo3mqL8PW5pH5U2CN4XE33DokiyZnUwuGpH2hmHLuM'
+                    address: 'GmJQraEgZ7rseK5kyNNKPJF7289NxZhknwsYyc6VUcio'
                 },
                 {
                     name: 'config'
@@ -2544,7 +2625,7 @@ export type DynamicBondingCurve = {
             accounts: [
                 {
                     name: 'poolAuthority'
-                    address: 'FhVo3mqL8PW5pH5U2CN4XE33DokiyZnUwuGpH2hmHLuM'
+                    address: 'GmJQraEgZ7rseK5kyNNKPJF7289NxZhknwsYyc6VUcio'
                 },
                 {
                     name: 'config'
@@ -2596,7 +2677,7 @@ export type DynamicBondingCurve = {
             accounts: [
                 {
                     name: 'poolAuthority'
-                    address: 'FhVo3mqL8PW5pH5U2CN4XE33DokiyZnUwuGpH2hmHLuM'
+                    address: 'GmJQraEgZ7rseK5kyNNKPJF7289NxZhknwsYyc6VUcio'
                 },
                 {
                     name: 'config'
@@ -3173,6 +3254,21 @@ export type DynamicBondingCurve = {
             name: 'poolTypeMismatch'
             msg: 'Pool type does not match instruction'
         },
+        {
+            code: 6077
+            name: 'invalidRemainingAccountSliceType'
+            msg: 'Invalid remaining account slice type for this instruction'
+        },
+        {
+            code: 6078
+            name: 'sellDisabled'
+            msg: 'Sells are disabled on this curve'
+        },
+        {
+            code: 6079
+            name: 'invalidDeadlineTimestamp'
+            msg: 'Invalid deadline timestamp'
+        },
     ]
     types: [
         {
@@ -3376,6 +3472,10 @@ export type DynamicBondingCurve = {
                     },
                     {
                         name: 'migrationQuoteThreshold'
+                        type: 'u64'
+                    },
+                    {
+                        name: 'migrationQuoteAmountCap'
                         type: 'u64'
                     },
                     {
@@ -4226,6 +4326,18 @@ export type DynamicBondingCurve = {
                         name: 'currentTimestamp'
                         type: 'u64'
                     },
+                    {
+                        name: 'isVirtual'
+                        type: 'bool'
+                    },
+                    {
+                        name: 'payer'
+                        type: 'pubkey'
+                    },
+                    {
+                        name: 'recipient'
+                        type: 'pubkey'
+                    },
                 ]
             }
         },
@@ -4278,6 +4390,18 @@ export type DynamicBondingCurve = {
                         name: 'currentTimestamp'
                         type: 'u64'
                     },
+                    {
+                        name: 'isVirtual'
+                        type: 'bool'
+                    },
+                    {
+                        name: 'payer'
+                        type: 'pubkey'
+                    },
+                    {
+                        name: 'recipient'
+                        type: 'pubkey'
+                    },
                 ]
             }
         },
@@ -4329,6 +4453,14 @@ export type DynamicBondingCurve = {
                     {
                         name: 'currentTimestamp'
                         type: 'u64'
+                    },
+                    {
+                        name: 'payer'
+                        type: 'pubkey'
+                    },
+                    {
+                        name: 'recipient'
+                        type: 'pubkey'
                     },
                 ]
             }
@@ -4425,6 +4557,10 @@ export type DynamicBondingCurve = {
                     {
                         name: 'uri'
                         type: 'string'
+                    },
+                    {
+                        name: 'deadlineTimestamp'
+                        type: 'u64'
                     },
                 ]
             }
@@ -4914,10 +5050,17 @@ export type DynamicBondingCurve = {
                         }
                     },
                     {
+                        name: 'migrationQuoteAmountCap'
+                        docs: [
+                            'fixed quote token amount to seed migration liquidity; zero uses migration_quote_threshold',
+                        ]
+                        type: 'u64'
+                    },
+                    {
                         name: 'padding0'
                         docs: ['Padding for future use']
                         type: {
-                            array: ['u8', 14]
+                            array: ['u8', 6]
                         }
                     },
                     {
@@ -5429,10 +5572,24 @@ export type DynamicBondingCurve = {
                         type: 'u64'
                     },
                     {
+                        name: 'deadlineTimestamp'
+                        docs: [
+                            'Timestamp at which the sale can complete before the quote threshold is reached. 0 means disabled.',
+                        ]
+                        type: 'u64'
+                    },
+                    {
+                        name: 'virtualQuoteReserve'
+                        docs: [
+                            'Virtual quote raised off-chain. Counts toward curve completion, but never funds migration.',
+                        ]
+                        type: 'u64'
+                    },
+                    {
                         name: 'padding2'
                         docs: ['Padding for further use']
                         type: {
-                            array: ['u64', 3]
+                            array: ['u64', 1]
                         }
                     },
                 ]

@@ -881,6 +881,37 @@ export function validateConfigParameters(
         throw new Error('Invalid migration fee')
     }
 
+    // this fork disables the partner/creator migration fee taken from the migration quote threshold
+    if (configParam.migrationFee.feePercentage !== 0) {
+        throw new Error(
+            'Migration fee percentage must be 0: migration fees are disabled by this program (InvalidMigratorFeePercentage)'
+        )
+    }
+
+    // migration quote amount cap validation
+    if (
+        configParam.migrationQuoteAmountCap &&
+        !configParam.migrationQuoteAmountCap.isZero()
+    ) {
+        if (
+            configParam.migrationQuoteAmountCap.gt(
+                configParam.migrationQuoteThreshold
+            )
+        ) {
+            throw new Error(
+                'Migration quote amount cap must be less than or equal to the migration quote threshold'
+            )
+        }
+        if (
+            configParam.migrationFee.feePercentage !== 0 ||
+            configParam.migrationFee.creatorFeePercentage !== 0
+        ) {
+            throw new Error(
+                'Migration quote amount cap requires migration fee percentage and creator fee percentage to be 0'
+            )
+        }
+    }
+
     // creator trading fee percentage validation
     if (
         configParam.creatorTradingFeePercentage < 0 ||
@@ -888,6 +919,13 @@ export function validateConfigParameters(
     ) {
         throw new Error(
             'Creator trading fee percentage must be between 0 and 100'
+        )
+    }
+
+    // this fork disables creator trading fees
+    if (configParam.creatorTradingFeePercentage !== 0) {
+        throw new Error(
+            'Creator trading fee percentage must be 0: creator trading fees are disabled by this program (InvalidCreatorTradingFeePercentage)'
         )
     }
 
@@ -1202,6 +1240,19 @@ export async function validateBalance(
 export function validateSwapAmount(amountIn: BN): boolean {
     if (amountIn.lte(new BN(0))) {
         throw new Error('Swap amount must be greater than 0')
+    }
+    return true
+}
+
+/**
+ * Validate a pool deadline timestamp: 0 disables the deadline, otherwise it must be in the future.
+ */
+export function validateDeadlineTimestamp(deadlineTimestamp: BN): boolean {
+    if (
+        !deadlineTimestamp.isZero() &&
+        deadlineTimestamp.lte(new BN(Math.floor(Date.now() / 1000)))
+    ) {
+        throw new Error('Deadline timestamp must be 0 or in the future')
     }
     return true
 }

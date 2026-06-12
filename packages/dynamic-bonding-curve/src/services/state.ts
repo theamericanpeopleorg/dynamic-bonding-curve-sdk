@@ -203,7 +203,9 @@ export class StateService extends DynamicBondingCurveProgram {
         }
 
         const config = await this.getPoolConfig(pool.poolState.config)
-        const quoteReserve = pool.poolState.quoteReserve
+        const quoteReserve = pool.poolState.quoteReserve.add(
+            pool.poolState.virtualQuoteReserve
+        )
         const migrationThreshold = config.migrationQuoteThreshold
 
         const quoteReserveDecimal = new Decimal(quoteReserve.toString())
